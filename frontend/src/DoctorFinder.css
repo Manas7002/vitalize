@@ -1,0 +1,138 @@
+.doctor-finder-idle {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem 1.4rem;
+  background: rgba(94,234,212,0.06);
+  border: 1px solid rgba(94,234,212,0.2);
+  border-radius: 16px;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.finder-icon { font-size: 2rem; flex-shrink: 0; }
+
+.finder-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #f0f4ff;
+  margin-bottom: 0.2rem;
+}
+
+.finder-sub {
+  font-size: 0.78rem;
+  color: #8899bb;
+  line-height: 1.5;
+}
+
+.finder-sub strong { color: #5eead4; }
+
+.find-btn {
+  margin-left: auto;
+  padding: 0.55rem 1.4rem;
+  border-radius: 12px;
+  background: #5eead4;
+  color: #0b1120;
+  font-weight: 700;
+  font-size: 0.85rem;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.find-btn:hover { opacity: 0.85; }
+.find-btn.small { padding: 0.4rem 1rem; font-size: 0.78rem; }
+
+.doctor-finder-loading {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.4rem;
+  color: #8899bb;
+  font-size: 0.85rem;
+  margin-top: 1.5rem;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(94,234,212,0.2);
+  border-top-color: #5eead4;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.doctor-finder-error {
+  padding: 1.2rem 1.4rem;
+  background: rgba(248,113,113,0.08);
+  border: 1px solid rgba(248,113,113,0.2);
+  border-radius: 16px;
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: #f87171;
+}
+
+.doctor-finder-ready {
+  margin-top: 1.5rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.finder-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.4rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.map-iframe {
+  width: 100%;
+  height: 320px;
+  border: none;
+  display: block;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.clinic-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1rem 1.4rem;
+}
+
+.clinic-link-btn {
+  padding: 0.35rem 0.9rem;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #8899bb;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+
+.clinic-link-btn:hover {
+  border-color: #5eead4;
+  color: #5eead4;
+}
+
+.finder-disclaimer {
+  padding: 0 1.4rem 1rem;
+  font-size: 0.7rem;
+  color: #8899bb;
+  line-height: 1.5;
+}
