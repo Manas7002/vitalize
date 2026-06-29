@@ -48,6 +48,7 @@ SYMPTOMS = {
     "joint_pain":          {"region": "legs",       "label": "Joint Pain"},
     "leg_swelling":        {"region": "legs",       "label": "Leg Swelling"},
     "leg_cramps":          {"region": "legs",       "label": "Leg Cramps"},
+    "leg_weakness":        {"region": "legs",       "label": "Leg Weakness"},
     "numbness_feet":       {"region": "legs",       "label": "Numbness in Feet"},
 
     # Female only
@@ -146,7 +147,6 @@ CONDITIONS = {
         "advice": "Identify and avoid the allergen. Seek emergency care for throat swelling or breathing difficulty.",
         "severity": "moderate", "gender": "all", "age": "all",
     },
-    # Female
     "Menstrual / Period Issues": {
         "weights": {"menstrual_cramps": 4, "heavy_bleeding": 3, "irregular_periods": 3, "pelvic_pain": 2, "bloating": 1, "mood_swings": 1, "fatigue": 1},
         "advice": "Track your cycle. Consult a gynecologist if periods are severely irregular, extremely painful, or unusually heavy.",
@@ -172,7 +172,6 @@ CONDITIONS = {
         "advice": "Hormone therapy and lifestyle changes can ease symptoms. Consult a doctor.",
         "severity": "low", "gender": "female", "age": "all",
     },
-    # Male
     "Prostate Issue": {
         "weights": {"difficulty_urinating": 4, "prostate_pressure": 4, "lower_back_pain": 2, "groin_pain": 2, "fatigue": 1},
         "advice": "See a urologist — early detection of prostate conditions is important.",
@@ -193,7 +192,6 @@ CONDITIONS = {
         "advice": "Groin pain that worsens with activity may indicate a hernia. See a doctor.",
         "severity": "moderate", "gender": "male", "age": "all",
     },
-    # Child
     "Ear Infection (Otitis Media)": {
         "weights": {"ear_tugging": 4, "ear_pain": 3, "fever": 2, "cough": 1, "runny_nose": 1},
         "advice": "Common in children. See a pediatrician — antibiotics may be needed.",
@@ -209,7 +207,6 @@ CONDITIONS = {
         "advice": "Common in children aged 3–12. Massage and warmth help. Consult a pediatrician if severe.",
         "severity": "low", "gender": "all", "age": "child",
     },
-    # Senior
     "Osteoporosis / Bone Weakness": {
         "weights": {"bone_pain": 4, "joint_pain": 3, "fatigue": 2, "balance_issues": 2},
         "advice": "Calcium, Vitamin D, and weight-bearing exercise help. See a doctor for a bone density scan.",

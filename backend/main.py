@@ -1,10 +1,11 @@
+from .data import SYMPTOMS, CONDITIONS, LANGUAGES
+from .translations import TRANSLATIONS, LANGUAGE_CODES
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import List, Optional
 
-from data import SYMPTOMS, CONDITIONS, LANGUAGES
-from translations import TRANSLATIONS
+
 
 app = FastAPI(title="Symptom Checker API", version="3.0.0")
 
