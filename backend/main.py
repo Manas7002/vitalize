@@ -1,11 +1,10 @@
-from .data import SYMPTOMS, CONDITIONS, LANGUAGES
-from .translations import TRANSLATIONS, LANGUAGE_CODES
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import List, Optional
 
-
+from data import SYMPTOMS, CONDITIONS, LANGUAGES
+from translations import TRANSLATIONS, LANGUAGE_CODES
 
 app = FastAPI(title="Symptom Checker API", version="3.0.0")
 
@@ -17,11 +16,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 class CheckRequest(BaseModel):
     symptoms: List[str] = Field(..., min_length=1)
     lang: str = Field(default="en")
     gender: Optional[str] = Field(default="all")
     age: Optional[str] = Field(default="adult")
+
 
 class ConditionResult(BaseModel):
     name: str
@@ -30,13 +31,16 @@ class ConditionResult(BaseModel):
     advice: str
     matched_symptoms: List[str]
 
+
 class CheckResponse(BaseModel):
     results: List[ConditionResult]
     lang: str
 
-@app.get("/")
+
+@app.get("/api")
 def root():
     return {"status": "ok", "service": "symptom-checker-api"}
+
 
 @app.get("/api/symptoms")
 def get_symptoms(lang: str = "en", gender: str = "all", age: str = "adult"):
@@ -60,9 +64,11 @@ def get_symptoms(lang: str = "en", gender: str = "all", age: str = "adult"):
         })
     return {"lang": lang, "symptoms": result}
 
+
 @app.get("/api/languages")
 def get_languages():
     return {"languages": [{"code": k, "name": v} for k, v in LANGUAGES.items()]}
+
 
 @app.post("/api/check", response_model=CheckResponse)
 def check_symptoms(req: CheckRequest):
