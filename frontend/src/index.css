@@ -1,13 +1,97 @@
-* { box-sizing: border-box; margin: 0; padding: 0; }
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap');
 
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: radial-gradient(ellipse at 15% 15%, #1a2e50 0%, #0b1120 65%);
-  color: #f0f4ff;
-  min-height: 100vh;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-#root { min-height: 100vh; }
+:root {
+  --color-void: #000000;
+  --color-bone: #ffffff;
+  --color-ash: #bdbdbd;
+  --color-smoke: #9a9a9a;
+  --color-plum: #8052ff;
+  --color-amber: #ffb829;
+  --color-lichen: #15846e;
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 3px; }
+  --bg-1: #000000;
+  --accent: #8052ff;
+  --accent-2: #15846e;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --text-primary: #ffffff;
+  --text-muted: #9a9a9a;
+  --text-muted-2: #bdbdbd;
+  --danger: #f87171;
+  --warning: #ffb829;
+  --safe: #15846e;
+
+  --font-main: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --glow-accent: 0 0 24px rgba(128, 82, 255, 0.35);
+  --glow-accent-strong: 0 0 36px rgba(128, 82, 255, 0.55);
+}
+
+body {
+  font-family: var(--font-main);
+  background: var(--color-void);
+  color: var(--text-primary);
+  min-height: 100vh;
+  letter-spacing: 0.02em;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  position: relative;
+}
+
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.glass:hover {
+  border-color: rgba(128, 82, 255, 0.4);
+  box-shadow: var(--glow-accent), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+button {
+  font-family: inherit;
+  cursor: none;
+  border: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: 4px;
+}
+
+.dither-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+.app-content {
+  position: relative;
+  z-index: 1;
+}

@@ -1,3 +1,5 @@
+import Dither from './Dither'
+import TargetCursor from './TargetCursor'
 import DoctorFinder from './DoctorFinder'
 import { useState, useEffect } from 'react'
 import BodyMap from './BodyMap'
@@ -17,6 +19,20 @@ const AGE_GROUPS = [
   { key: 'adult', label: 'Adult', sub: '12–60', icon: '🧑' },
   { key: 'senior', label: 'Senior', sub: '60+', icon: '🧓' },
 ]
+
+function PulseIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 100 100" className="pulse-icon">
+      <circle cx="50" cy="50" r="46" className="pulse-ring pulse-ring-1" />
+      <circle cx="50" cy="50" r="46" className="pulse-ring pulse-ring-2" />
+      <path
+        d="M8,50 L28,50 L36,30 L46,70 L54,15 L62,50 L72,50 L80,40 L92,50"
+        className="pulse-line"
+        fill="none"
+      />
+    </svg>
+  )
+}
 
 function exportPDF(gender, age, lang, selected, symptoms, results) {
   const date = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
@@ -102,6 +118,31 @@ function exportPDF(gender, age, lang, selected, symptoms, results) {
   }
 }
 
+function DitherBackground() {
+  return (
+    <>
+      <TargetCursor
+        targetSelector=".cursor-target"
+        spinDuration={2}
+        hideDefaultCursor={true}
+        cursorColor="#8052ff"
+        cursorColorOnTarget="#ffb829"
+      />
+      <div className="dither-background">
+        <Dither
+          waveColor={[0.5, 0.31, 1.0]}
+          colorNum={4}
+          waveAmplitude={0.25}
+          waveFrequency={2.5}
+          waveSpeed={0.04}
+          enableMouseInteraction={true}
+          mouseRadius={0.4}
+        />
+      </div>
+    </>
+  )
+}
+
 export default function App() {
   const [step, setStep] = useState('gender')   // gender | age | main
   const [gender, setGender] = useState(null)
@@ -171,146 +212,160 @@ export default function App() {
 
   // ── GENDER SCREEN ──
   if (step === 'gender') return (
-    <div className="app onboarding-screen">
-      <div className="onboarding-card glass">
-        <div className="onboarding-icon">🩺</div>
-        <h1>Vitalize</h1>
-        <p className="subtitle">AI-assisted triage to help you understand your symptoms</p>
-        <p className="step-label">Step 1 of 2 — Biological sex</p>
-        <div className="gender-options">
-          <button className="select-btn male" onClick={() => { setGender('male'); setStep('age') }}>
-            <span className="select-icon">♂</span><span>Male</span>
-          </button>
-          <button className="select-btn female" onClick={() => { setGender('female'); setStep('age') }}>
-            <span className="select-icon">♀</span><span>Female</span>
-          </button>
-          <button className="select-btn other" onClick={() => { setGender('all'); setStep('age') }}>
-            <span className="select-icon">⚥</span><span>Prefer not to say</span>
-          </button>
+    <>
+      <DitherBackground />
+      <div className="app app-content onboarding-screen">
+        <div className="onboarding-card glass">
+  <div className="brand-lockup onboarding-brand">
+    <PulseIcon />
+    <h1 className="brand-name onboarding-brand-name">Vitalize</h1>
+  </div>
+  <p className="subtitle">AI-assisted triage to help you understand your symptoms</p>
+          <p className="step-label">Step 1 of 2 — Biological sex</p>
+          <div className="gender-options">
+            <button className="select-btn male cursor-target" onClick={() => { setGender('male'); setStep('age') }}>
+              <span className="select-icon">♂</span><span>Male</span>
+            </button>
+            <button className="select-btn female cursor-target" onClick={() => { setGender('female'); setStep('age') }}>
+              <span className="select-icon">♀</span><span>Female</span>
+            </button>
+            <button className="select-btn other cursor-target" onClick={() => { setGender('all'); setStep('age') }}>
+              <span className="select-icon">⚥</span><span>Prefer not to say</span>
+            </button>
+          </div>
+          <p className="privacy-note">Used only to filter relevant symptoms. Never stored.</p>
         </div>
-        <p className="privacy-note">Used only to filter relevant symptoms. Never stored.</p>
       </div>
-    </div>
+    </>
   )
 
   // ── AGE SCREEN ──
   if (step === 'age') return (
-    <div className="app onboarding-screen">
-      <div className="onboarding-card glass">
-        <div className="onboarding-icon">🧑‍⚕️</div>
-        <h1>Age Group</h1>
-        <p className="subtitle">Conditions and symptoms vary by age</p>
-        <p className="step-label">Step 2 of 2 — Age group</p>
-        <div className="age-options">
-          {AGE_GROUPS.map(a => (
-            <button key={a.key} className="age-btn" onClick={() => { setAge(a.key); setStep('main') }}>
-              <span className="age-icon">{a.icon}</span>
-              <span className="age-label">{a.label}</span>
-              <span className="age-sub">{a.sub}</span>
-            </button>
-          ))}
+    <>
+      <DitherBackground />
+      <div className="app app-content onboarding-screen">
+        <div className="onboarding-card glass">
+          <div className="onboarding-icon">🧑‍⚕️</div>
+          <h1>Age Group</h1>
+          <p className="subtitle">Conditions and symptoms vary by age</p>
+          <p className="step-label">Step 2 of 2 — Age group</p>
+          <div className="age-options">
+            {AGE_GROUPS.map(a => (
+              <button key={a.key} className="age-btn cursor-target" onClick={() => { setAge(a.key); setStep('main') }}>
+                <span className="age-icon">{a.icon}</span>
+                <span className="age-label">{a.label}</span>
+                <span className="age-sub">{a.sub}</span>
+              </button>
+            ))}
+          </div>
+          <button className="back-btn cursor-target" onClick={() => setStep('gender')}>← Back</button>
         </div>
-        <button className="back-btn" onClick={() => setStep('gender')}>← Back</button>
       </div>
-    </div>
+    </>
   )
 
   // ── MAIN APP ──
   const ageInfo = AGE_GROUPS.find(a => a.key === age)
 
   return (
-    <div className="app">
-      <header className="app-header">
-        <div className="header-top">
-          <h1>🩺 Vitalize</h1>
-          <div className="header-badges">
-            <span className="profile-badge">
-              {gender === 'male' ? '♂' : gender === 'female' ? '♀' : '⚥'} {gender === 'all' ? 'General' : gender === 'male' ? 'Male' : 'Female'}
-            </span>
-            <span className="profile-badge">{ageInfo?.icon} {ageInfo?.label}</span>
-            <button className="restart-btn" onClick={restart}>Start over</button>
+    <>
+      <DitherBackground />
+      <div className="app app-content">
+        <header className="app-header">
+          <div className="header-top">
+            <div className="brand-lockup">
+              <PulseIcon />
+              <h1 className="brand-name">Vitalize</h1>
+            </div>
+            <div className="header-badges">
+              <span className="profile-badge">
+                {gender === 'male' ? '♂' : gender === 'female' ? '♀' : '⚥'} {gender === 'all' ? 'General' : gender === 'male' ? 'Male' : 'Female'}
+              </span>
+              <span className="profile-badge">{ageInfo?.icon} {ageInfo?.label}</span>
+              <button className="restart-btn cursor-target" onClick={restart}>Start over</button>
+            </div>
           </div>
-        </div>
-        <p className="subtitle">Click body regions or select symptoms below</p>
-        <div className="lang-switcher">
-          {['en', 'hi', 'te'].map(l => (
-            <button key={l} className={`lang-btn ${lang === l ? 'active' : ''}`} onClick={() => setLang(l)}>
-              {l === 'en' ? 'English' : l === 'hi' ? 'हिंदी' : 'తెలుగు'}
-            </button>
-          ))}
-        </div>
-      </header>
+          <p className="subtitle">Click body regions or select symptoms below</p>
+          <div className="lang-switcher">
+            {['en', 'hi', 'te'].map(l => (
+              <button key={l} className={`lang-btn cursor-target ${lang === l ? 'active' : ''}`} onClick={() => setLang(l)}>
+                {l === 'en' ? 'English' : l === 'hi' ? 'हिंदी' : 'తెలుగు'}
+              </button>
+            ))}
+          </div>
+        </header>
 
-      <main className="app-main">
-        <section className="glass body-map-section">
-          <h2>Body map</h2>
-          <p className="hint">Click to highlight a region</p>
-          <BodyMap activeRegions={activeRegions} onRegionClick={handleRegionClick} gender={gender} />
-          {activeRegions.size > 0 && (
-            <div className="active-regions">
-              {[...activeRegions].map(r => (
-                <span key={r} className="region-tag">{REGION_LABEL_MAP[r] || r}</span>
+        <main className="app-main">
+          <section className="glass body-map-section">
+            <h2>Body map</h2>
+            <p className="hint">Click to highlight a region</p>
+            <BodyMap activeRegions={activeRegions} onRegionClick={handleRegionClick} gender={gender} />
+            {activeRegions.size > 0 && (
+              <div className="active-regions">
+                {[...activeRegions].map(r => (
+                  <span key={r} className="region-tag">{REGION_LABEL_MAP[r] || r}</span>
+                ))}
+              </div>
+            )}
+          </section>
+
+          <section className="glass symptom-list-section">
+            <h2>Symptoms <span className="count">({selected.size} selected)</span></h2>
+            <div className="symptom-groups">
+              {Object.entries(grouped).map(([region, syms]) => (
+                <div key={region} className="symptom-group">
+                  <p className="group-label">{REGION_LABEL_MAP[region] || region}</p>
+                  <div className="symptom-grid">
+                    {syms.map(s => (
+                      <button key={s.key}
+                        className={`symptom-chip cursor-target ${selected.has(s.key) ? 'selected' : ''}`}
+                        onClick={() => toggleSymptom(s.key)}>
+                        {s.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
-          )}
-        </section>
+            <div className="action-row">
+              <button className="check-btn cursor-target" onClick={checkSymptoms} disabled={!selected.size || loading}>
+                {loading ? 'Checking…' : `Check symptoms${selected.size > 0 ? ` (${selected.size})` : ''}`}
+              </button>
+              {(selected.size > 0 || results) && <button className="reset-btn cursor-target" onClick={reset}>Clear</button>}
+            </div>
+            {error && <p className="error-msg">⚠️ {error}</p>}
+          </section>
+        </main>
 
-        <section className="glass symptom-list-section">
-          <h2>Symptoms <span className="count">({selected.size} selected)</span></h2>
-          <div className="symptom-groups">
-            {Object.entries(grouped).map(([region, syms]) => (
-              <div key={region} className="symptom-group">
-                <p className="group-label">{REGION_LABEL_MAP[region] || region}</p>
-                <div className="symptom-grid">
-                  {syms.map(s => (
-                    <button key={s.key}
-                      className={`symptom-chip ${selected.has(s.key) ? 'selected' : ''}`}
-                      onClick={() => toggleSymptom(s.key)}>
-                      {s.label}
-                    </button>
-                  ))}
+        {results && (
+          <section className="results-section">
+            <div className="results-header">
+              <h2>Possible conditions</h2>
+              <button className="export-btn cursor-target" onClick={() => exportPDF(gender, age, lang, selected, symptoms, results)}>
+                ⬇ Save as PDF
+              </button>
+            </div>
+            <div className="results-grid">
+              {results.map(r => (
+                <div key={r.name} className="glass result-card cursor-target">
+                  <div className="result-header">
+                    <span className="result-name">{r.name}</span>
+                    <span className="severity-badge" style={{ background: SEVERITY_COLOR[r.severity] }}>{r.severity}</span>
+                  </div>
+                  <div className="score-bar-wrap">
+                    <div className="score-bar" style={{ width: `${r.score}%`, background: SEVERITY_COLOR[r.severity] }} />
+                  </div>
+                  <span className="score-label">{r.score}% symptom match</span>
+                  <p className="advice">{r.advice}</p>
+                  <p className="matched">Matched: {r.matched_symptoms.join(', ')}</p>
                 </div>
-              </div>
-            ))}
-          </div>
-          <div className="action-row">
-            <button className="check-btn" onClick={checkSymptoms} disabled={!selected.size || loading}>
-              {loading ? 'Checking…' : `Check symptoms${selected.size > 0 ? ` (${selected.size})` : ''}`}
-            </button>
-            {(selected.size > 0 || results) && <button className="reset-btn" onClick={reset}>Clear</button>}
-          </div>
-          {error && <p className="error-msg">⚠️ {error}</p>}
-        </section>
-      </main>
-
-      {results && (
-        <section className="results-section">
-          <div className="results-header">
-            <h2>Possible conditions</h2>
-            <button className="export-btn" onClick={() => exportPDF(gender, age, lang, selected, symptoms, results)}>
-              ⬇ Save as PDF
-            </button>
-          </div>
-          <div className="results-grid">
-            {results.map(r => (
-              <div key={r.name} className="glass result-card">
-                <div className="result-header">
-                  <span className="result-name">{r.name}</span>
-                  <span className="severity-badge" style={{ background: SEVERITY_COLOR[r.severity] }}>{r.severity}</span>
-                </div>
-                <div className="score-bar-wrap">
-                  <div className="score-bar" style={{ width: `${r.score}%`, background: SEVERITY_COLOR[r.severity] }} />
-                </div>
-                <span className="score-label">{r.score}% symptom match</span>
-                <p className="advice">{r.advice}</p>
-                <p className="matched">Matched: {r.matched_symptoms.join(', ')}</p>
-              </div>
-            ))}
-          </div>
-         <p className="disclaimer">⚠️ This tool does not provide medical diagnosis. Always consult a qualified doctor.</p>
-          <DoctorFinder results={results} />
-        </section>
-      )}
-    </div>
+              ))}
+            </div>
+            <p className="disclaimer">⚠️ This tool does not provide medical diagnosis. Always consult a qualified doctor.</p>
+            <DoctorFinder results={results} />
+          </section>
+        )}
+      </div>
+    </>
   )
 }

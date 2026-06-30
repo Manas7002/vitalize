@@ -2,20 +2,23 @@ import { useState } from 'react'
 import './BodyMap.css'
 
 const REGION_COLORS = {
-  active: '#5eead4',
-  activeStroke: '#2dd4bf',
+  active: '#8052ff',
+  activeStroke: '#a685ff',
   inactive: 'rgba(148,163,184,0.15)',
   inactiveStroke: 'rgba(148,163,184,0.35)',
 }
 
 function RegionPath({ region, activeRegions, onRegionClick, d, label, labelX, labelY, shape = 'path', ...shapeProps }) {
   const active = activeRegions.has(region)
-  const fill = active ? 'rgba(94,234,212,0.25)' : REGION_COLORS.inactive
+  const fill = active ? 'rgba(128,82,255,0.28)' : REGION_COLORS.inactive
   const stroke = active ? REGION_COLORS.activeStroke : REGION_COLORS.inactiveStroke
-  const textFill = active ? '#5eead4' : 'rgba(148,163,184,0.6)'
+  const textFill = active ? '#a685ff' : 'rgba(148,163,184,0.6)'
   const onClick = () => onRegionClick(region)
 
-  const sharedProps = { fill, stroke, strokeWidth: active ? 2 : 1.2, className: 'region-shape', onClick }
+  const sharedProps = {
+    fill, stroke, strokeWidth: active ? 2 : 1.2,
+    className: 'region-shape cursor-target', onClick,
+  }
 
   return (
     <g>
@@ -74,7 +77,7 @@ function FrontBody({ activeRegions, onRegionClick, gender }) {
         <RegionPath {...rp('chest_f')} shape="ellipse"
           cx="115" cy="148" rx="16" ry="13" label="" labelX="115" labelY="149" />
         {activeRegions.has('chest_f') && (
-          <text x="100" y="168" textAnchor="middle" fontSize="7" fill="#5eead4" className="region-label">Breast</text>
+          <text x="100" y="168" textAnchor="middle" fontSize="7" fill="#a685ff" className="region-label">Breast</text>
         )}
         {!activeRegions.has('chest_f') && (
           <text x="100" y="168" textAnchor="middle" fontSize="7" fill="rgba(148,163,184,0.5)" className="region-label">Breast</text>
@@ -230,8 +233,8 @@ export default function BodyMap({ activeRegions, onRegionClick, gender }) {
   return (
     <div className="body-map-wrapper">
       <div className="view-toggle">
-        <button className={`toggle-btn ${view === 'front' ? 'active' : ''}`} onClick={() => setView('front')}>Front</button>
-        <button className={`toggle-btn ${view === 'back' ? 'active' : ''}`} onClick={() => setView('back')}>Back</button>
+        <button className={`toggle-btn cursor-target ${view === 'front' ? 'active' : ''}`} onClick={() => setView('front')}>Front</button>
+        <button className={`toggle-btn cursor-target ${view === 'back' ? 'active' : ''}`} onClick={() => setView('back')}>Back</button>
       </div>
       {view === 'front'
         ? <FrontBody activeRegions={activeRegions} onRegionClick={onRegionClick} gender={gender} />

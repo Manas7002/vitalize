@@ -2,42 +2,42 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
+  gap: 14px;
 }
 
 .view-toggle {
   display: flex;
-  gap: 0.4rem;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 20px;
-  padding: 3px;
+  gap: 6px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 4px;
 }
 
 .toggle-btn {
-  padding: 0.25rem 1rem;
-  border-radius: 16px;
-  font-size: 0.78rem;
+  padding: 6px 18px;
+  border-radius: 24px;
+  font-size: 12px;
   font-weight: 600;
+  letter-spacing: 0.025em;
   background: transparent;
-  color: rgba(255,255,255,0.45);
+  color: var(--text-muted);
   border: none;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.18s ease;
 }
 
 .toggle-btn.active {
   background: var(--accent);
-  color: #0f1729;
+  color: #ffffff;
 }
 
 .body-map-svg {
   width: 100%;
-  max-width: 190px;
+  max-width: 200px;
   height: auto;
   display: block;
   margin: 0 auto;
-  filter: drop-shadow(0 0 12px rgba(94,234,212,0.08));
 }
 
 .region-shape {
@@ -46,12 +46,12 @@
 }
 
 .region-shape:hover {
-  filter: brightness(1.5);
+  filter: brightness(1.6);
 }
 
 .region-label {
   pointer-events: none;
-  font-family: inherit;
+  font-family: var(--font-main);
   user-select: none;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.025em;
 }
